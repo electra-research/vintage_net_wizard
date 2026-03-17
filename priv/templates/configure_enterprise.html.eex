@@ -9,7 +9,11 @@
   </head>
   <body class="h-100">
     <div class="container">
-      <h1 class="text-right mt-2"><a href="/"><%= ui.title %></a></h1>
+      <div id="logo_container" class="container w-100">
+       <a href="/">
+        <img class="mt-2 w-100" src="/svg/electra_logo.svg" alt="Electra" />
+       </a>
+      </div>
 
       <div class="container">
         <div class="text-center">

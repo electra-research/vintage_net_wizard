@@ -43,7 +43,8 @@ defmodule VintageNetWizard.Web.Router do
     case WiFiConfiguration.json_to_network_config(params) do
       {:ok, wifi_config} ->
         :ok = BackendServer.save(wifi_config)
-        redirect(conn, "/")
+        # redirect(conn, "/")
+        redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
 
       error ->
         {:ok, key_mgmt} = WiFiConfiguration.key_mgmt_from_string(conn.body_params["key_mgmt"])

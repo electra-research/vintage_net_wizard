@@ -16,9 +16,9 @@
        </div>
        <div id="configuration_status_container" class="container configuration-status-container w-100">
          <div class="row">
-           <div class="col text-left">Status</div>
+           <div class="col-4 text-left">Status</div>
            <div id="configuration_status_value" class="col text-center">
-             <%= configuration_status.value %>
+             Not configured yet
            </div>
          </div>
        </div>
