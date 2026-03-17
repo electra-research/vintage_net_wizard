@@ -51,8 +51,9 @@
            </table>
          </div>
          <p><i>Drag the networks to change the order that they will be tried</i></p>
+         <p>After configuration the device will become accessible at <a href="http://<%= Monitor.Mdns.own_hostname() %>">http://<%= Monitor.Mdns.own_hostname() %></a>.</p>
 
-         <a class="btn btn-primary" href="/networks">
+         <a class="btn btn-secondary" href="/networks">
            Add a new network
          </a>
          <%= if length(configs) > 0 do %>
