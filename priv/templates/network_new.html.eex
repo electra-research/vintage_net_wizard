@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
   </head>
-  <body class="bg-light h-100 d-flex flex-column">
+  <body class="h-100 d-flex flex-column">
      <div class="container">
-       <h1 class="text-right mt-2"><a href="/" style="color: <%= ui.title_color %>"><%= ui.title %></a></h1>
+       <h1 class="text-right mt-2"><a href="/"><%= ui.title %></a></h1>
        <div class="row justify-content-center">
          <form class="col-sm-8 mt-3" action="/networks/new" method="POST">
            <div class="form-group">
@@ -26,7 +26,7 @@
              </select>
            </div>
 
-           <button type="submit" class="btn btn-primary" style="background-color:<%= ui.button_color %>">
+           <button type="submit" class="btn btn-primary">
              Next
            </button>
          </form>
@@ -34,7 +34,7 @@
      </div> <!-- end form container -->
 
     </div> <!-- end container -->
-     <footer class="py-3 bg-white shadow-sm w-100 text-muted">
+     <footer class="py-3 shadow-sm w-100 text-muted">
        <div class="container">
          <%= for {info_name, info_data} <- device_info do %>
            <div class="row">

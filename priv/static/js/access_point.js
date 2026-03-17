@@ -29,12 +29,12 @@
 
   function buildAccessPointRow(row, accessPoint) {
     const ssidElem = buildSSIDTableData(accessPoint);
-    const securityElem = buildSecurityTableData(accessPoint);
-    const signalElem = buildSignalTableData(accessPoint);
+    // const securityElem = buildSecurityTableData(accessPoint);
+    // const signalElem = buildSignalTableData(accessPoint);
 
     row.appendChild(ssidElem);
-    row.appendChild(securityElem);
-    row.appendChild(signalElem);
+    // row.appendChild(securityElem);
+    // row.appendChild(signalElem);
   }
 
   function buildSSIDTableData({ ssid }) {
