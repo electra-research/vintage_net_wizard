@@ -21,6 +21,14 @@
          </div>
        </div>
 
+       <div id="zip_container" class="container w-100">
+         <div class="row">
+           <div class="col">
+             <input type=text id=zip name=zip>
+           </div>
+         </div>
+       </div>
+
        <div id="aps_container" class="container w-100">
          <div id="aps_table">
            <table class="table table-hover access-points-table">
@@ -55,8 +63,8 @@
            Add a new network
          </a>
          <%= if length(configs) > 0 do %>
-           <a id="complete_button" class="btn btn-primary" href="/complete">
-             Complete
+           <a id="complete_button" class="btn btn-primary" href="/apply">
+             Apply
            </a>
          <% end %>
        </div>

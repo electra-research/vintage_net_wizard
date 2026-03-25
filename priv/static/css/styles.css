@@ -126,6 +126,6 @@ button#back_button {
  color: var(--el-white);
  background-color: var(--el-gray);
  margin-top: 1em; }
-#password {
+#config_form input {
  color: var(--el-white);
  background-color: var(--el-gray); }

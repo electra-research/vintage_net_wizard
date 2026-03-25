@@ -38,13 +38,16 @@ defmodule VintageNetWizard.Web.Router do
 
   post "/ssid/:ssid" do
     password = conn.body_params["password"]
+    zip_code = conn.body_params["zip_code"]
     params = Map.put(conn.body_params, "ssid", ssid)
 
     case WiFiConfiguration.json_to_network_config(params) do
       {:ok, wifi_config} ->
         :ok = BackendServer.save(wifi_config)
-        # redirect(conn, "/")
-        redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
+        Monitor.set_zip_code(zip_code)
+        #redirect(conn, "/")
+        #redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
+        redirect(conn, "/apply")
 
       error ->
         {:ok, key_mgmt} = WiFiConfiguration.key_mgmt_from_string(conn.body_params["key_mgmt"])
@@ -54,6 +57,7 @@ defmodule VintageNetWizard.Web.Router do
           ssid: ssid,
           error: error_message,
           password: password,
+          zip_code: Monitor.get_zip_code(),
           user: conn.body_params["user"]
         )
     end
@@ -75,6 +79,7 @@ defmodule VintageNetWizard.Web.Router do
     render_password_page(conn, key_mgmt, conn.assigns.init_opts,
       ssid: ssid,
       password: "",
+      zip_code: Monitor.get_zip_code(),
       error: "",
       user: ""
     )
@@ -134,6 +139,7 @@ defmodule VintageNetWizard.Web.Router do
         render_password_page(conn, key_mgmt, conn.assigns.init_opts,
           ssid: ssid,
           password: "",
+          zip_code: Monitor.get_zip_code(),
           error: "",
           user: ""
         )
