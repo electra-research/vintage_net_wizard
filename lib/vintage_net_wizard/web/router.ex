@@ -44,7 +44,7 @@ defmodule VintageNetWizard.Web.Router do
     case WiFiConfiguration.json_to_network_config(params) do
       {:ok, wifi_config} ->
         :ok = BackendServer.save(wifi_config)
-        Monitor.set_zip_code(zip_code)
+        set_zip_code(zip_code)
         #redirect(conn, "/")
         #redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
         redirect(conn, "/apply")
@@ -57,7 +57,7 @@ defmodule VintageNetWizard.Web.Router do
           ssid: ssid,
           error: error_message,
           password: password,
-          zip_code: Monitor.get_zip_code(),
+          zip_code: get_zip_code(),
           user: conn.body_params["user"]
         )
     end
@@ -79,7 +79,7 @@ defmodule VintageNetWizard.Web.Router do
     render_password_page(conn, key_mgmt, conn.assigns.init_opts,
       ssid: ssid,
       password: "",
-      zip_code: Monitor.get_zip_code(),
+      zip_code: get_zip_code(),
       error: "",
       user: ""
     )
@@ -139,7 +139,7 @@ defmodule VintageNetWizard.Web.Router do
         render_password_page(conn, key_mgmt, conn.assigns.init_opts,
           ssid: ssid,
           password: "",
-          zip_code: Monitor.get_zip_code(),
+          zip_code: get_zip_code(),
           error: "",
           user: ""
         )
@@ -168,6 +168,14 @@ defmodule VintageNetWizard.Web.Router do
 
   match _ do
     send_resp(conn, 404, "oops")
+  end
+
+  if Mix.target == :host do
+    defp get_zip_code(), do: nil
+    defp set_zip_code(z), do: z
+  else
+    defp get_zip_code(), do: Monitor.get_zip_code()
+    defp set_zip_code(z), do: Monitor.set_zip_code(z)
   end
 
   defp redirect_with_dnsname(conn) do

@@ -79,6 +79,9 @@ footer {
 #configuration_status_value {
  color: var(--el-lightgray);
 }
+#configuration_status_value.configured {
+ color: var(--el-white);
+}
 
 
 #aps_container {
@@ -129,3 +132,6 @@ button#back_button {
 #config_form input {
  color: var(--el-white);
  background-color: var(--el-gray); }
+#range_wiregraph_container.apply-page { display: none; }
+#range_wiregraph_container.apply-page.done { display: block; }
+#electra_dot_local_button { margin: 2em 0; }

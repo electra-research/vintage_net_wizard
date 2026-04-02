@@ -9,10 +9,23 @@
   </head>
   <body class="h-100 d-flex flex-column">
      <div class="container">
-       <h1 class="text-right mt-2"><a href="/"><%= ui.title %></a></h1>
+       <div id="logo_container" class="container w-100">
+         <a href="/">
+           <img class="mt-2 w-100" src="/svg/electra_logo.svg" alt="Electra" />
+         </a>
+       </div>
 
-       <div class="content">
-         WiFi configuration is complete!
+       <div id="configuration_status_container" class="container configuration-status-container w-100">
+         <div class="row">
+           <div class="col-4 text-left">Status</div>
+           <div id="configuration_status_value" class="col text-center">Configured</div>
+         </div>
+       </div>
+       <div id="range_wiregraph_container" class="container">
+         <img class="mt-2 w-100" src="/svg/electra_range_wiregraph.svg" alt="You are all set!" />
+         <div>
+           <a class="btn" target="_blank" href="http://electra.local">Go to electra.local in your browser →</a>
+         </div>
        </div>
      </div>
      <footer class="py-3 shadow-sm w-100 text-muted">

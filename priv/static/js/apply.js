@@ -58,10 +58,13 @@ function applyConfiguration(title, button_color) {
     if (view === "configurationBad") {
       btnClass = "btn-danger";
       btnText = "Complete Without Verification";
-    }
-
-    if (view != "configurationBad") {
+    } else {
       button.style.backgroundColor = button_color;
+      if (view === "configurationGood") {
+        const el = document.getElementById("configuration_status_value");
+        el.textContent = "Configured";
+        el.className += " configured";
+      }
     }
 
     button.classList.add("btn");
@@ -114,7 +117,8 @@ function applyConfiguration(title, button_color) {
         <a class="btn btn-primary" href="/">Configure</a>
         `, createCompleteLink];
       case "complete":
-        return ["Configuration complete", null];
+        document.getElementById("range_wiregraph_container").className += " done";
+        return ['', null];
     }
   }
 
