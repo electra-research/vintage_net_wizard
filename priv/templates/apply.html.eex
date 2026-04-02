@@ -18,7 +18,7 @@
        <div id="configuration_status_container" class="container configuration-status-container w-100">
          <div class="row">
            <div class="col-4 text-left">Status</div>
-           <div id="configuration_status_value" class="col text-center">Not configured yet</div>
+           <div id="configuration_status_value" class="col text-center configuring">Configuring</div>
          </div>
        </div>
        <div class="content text-center">

@@ -76,12 +76,9 @@ footer {
 }
 
 
-#configuration_status_value {
- color: var(--el-lightgray);
-}
-#configuration_status_value.configured {
- color: var(--el-white);
-}
+#configuration_status_value { color: var(--el-lightgray); }
+#configuration_status_value.configuring { color: var(--el-orange); }
+#configuration_status_value.configuring.configured { color: var(--el-white); }
 
 
 #aps_container {

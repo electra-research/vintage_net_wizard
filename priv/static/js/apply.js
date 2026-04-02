@@ -4,7 +4,6 @@ function applyConfiguration(title, button_color) {
   const state = {
     view: "trying",
     dots: "",
-    completeTimer: null,
     targetElem: document.querySelector(".content"),
     configurationStatus: "not_configured",
     completed: false,
@@ -33,7 +32,6 @@ function applyConfiguration(title, button_color) {
         if (!status.completed) {
           state.view = "configurationGood";
           state.configurationStatus = status;
-          state.completeTimer = setTimeout(complete, 60000);
           render(state);
         }
         break;
@@ -58,34 +56,6 @@ function applyConfiguration(title, button_color) {
     fetch("/api/v1/complete");
   }
 
-  function createCompleteLink({ targetElem, view }) {
-    const button = document.createElement("button");
-    var btnClass = "btn-primary";
-    var btnText = "Complete";
-
-    if (view === "configurationBad") {
-      btnClass = "btn-danger";
-      btnText = "Complete Without Verification";
-    } else {
-      button.style.backgroundColor = button_color;
-    }
-
-    button.classList.add("btn");
-    button.classList.add(btnClass);
-    button.addEventListener("click", handleCompleteClick);
-    button.innerHTML = btnText;
-
-    targetElem.appendChild(button);
-  }
-
-  function handleCompleteClick(e) {
-    if (state.completeTimer) {
-      clearTimeout(state.completeTimer);
-      state.completeTimer = null;
-    }
-    complete();
-  }
-
   function view({ view, title, dots, ssid }) {
     switch (view) {
       case "trying":
@@ -104,29 +74,12 @@ function applyConfiguration(title, button_color) {
         return ["", successfulFinish];
       case "configurationBad":
         return [`
-        <p>Failed to connect.</p>
-
-        <p>Try checking the following:</p>
-        <ul>
-          <li>All WiFi passwords are correct</li>
-          <li>At least one network is in range</li>
-          <li>Whether your network administrator requires additional steps for granting access to the WiFi network</li>
-        </ul>
-
-        <p>Please check your setup and try again or skip verification.</p>
+        <p>Failed to connect. Please check your configuration and try again.</p>
         <a class="btn btn-primary" href="/">Configure</a>
-        `, createCompleteLink];
+        `, null];
       case "complete":
         return ['', null];
     }
-  }
-
-  function complete() {
-    fetch("/api/v1/complete")
-      .then(resp => {
-        state.view = "complete";
-        render(state);
-      });
   }
 
   function render(state) {

@@ -109,10 +109,6 @@
                animation: 150,
                onEnd: handleSort
        });
-
-       document.getElementById("complete_button").addEventListener("click", function() {
-         setTimeout(function(){window.location.replace("http://electra.local")}, 5000);
-       });
      </script>
   </body>
 </html>
