@@ -21,9 +21,10 @@
            <div id="configuration_status_value" class="col text-center">Not configured yet</div>
          </div>
        </div>
-       <div class="content">
-        <p>Please wait while we verify your configuration.</p>
-
+       <div class="content text-center">
+         <div id="please_wait">
+          Please wait while we verify your connection.
+         </div>
         <p>If this page doesn't update in 15-30 seconds, check that you're connected to
         the access point named "<b><%= ssid %></b>"</p>
        </div>

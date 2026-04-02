@@ -50,6 +50,14 @@ function applyConfiguration(title, button_color) {
     render(state);
   }
 
+  function successfulFinish({ view }) {
+    const el = document.getElementById("configuration_status_value");
+    el.textContent = "Configured";
+    el.className += " configured";
+    document.getElementById("range_wiregraph_container").className += " done";
+    fetch("/api/v1/complete");
+  }
+
   function createCompleteLink({ targetElem, view }) {
     const button = document.createElement("button");
     var btnClass = "btn-primary";
@@ -60,11 +68,6 @@ function applyConfiguration(title, button_color) {
       btnText = "Complete Without Verification";
     } else {
       button.style.backgroundColor = button_color;
-      if (view === "configurationGood") {
-        const el = document.getElementById("configuration_status_value");
-        el.textContent = "Configured";
-        el.className += " configured";
-      }
     }
 
     button.classList.add("btn");
@@ -87,7 +90,9 @@ function applyConfiguration(title, button_color) {
     switch (view) {
       case "trying":
         return [`
-        <p>Please wait while the ${title} verifies your configuration.</p>
+        <div id="please_wait">
+         Please wait while we verify your connection.
+        </div>
 
         <p>${dots}</p>
 
@@ -96,12 +101,7 @@ function applyConfiguration(title, button_color) {
         `, runGetStatus
         ];
       case "configurationGood":
-        return [`
-        <p>Success!</p>
-
-        <p>Press "Complete" to exit the wizard and connect back to your previous network.</p>
-        <p>Exiting automatically after 60 seconds.</p>
-        `, createCompleteLink];
+        return ["", successfulFinish];
       case "configurationBad":
         return [`
         <p>Failed to connect.</p>
@@ -117,7 +117,6 @@ function applyConfiguration(title, button_color) {
         <a class="btn btn-primary" href="/">Configure</a>
         `, createCompleteLink];
       case "complete":
-        document.getElementById("range_wiregraph_container").className += " done";
         return ['', null];
     }
   }

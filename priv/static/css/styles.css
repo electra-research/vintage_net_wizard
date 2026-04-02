@@ -135,3 +135,4 @@ button#back_button {
 #range_wiregraph_container.apply-page { display: none; }
 #range_wiregraph_container.apply-page.done { display: block; }
 #electra_dot_local_button { margin: 2em 0; }
+#please_wait { font-size: 20px; font-weight: bold; }
