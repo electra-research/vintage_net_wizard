@@ -20,7 +20,7 @@
            <div id="configuration_status_value" class="col text-center">Not configured yet</div>
          </div>
        </div>
-
+       <a id="back_button" class="btn btn-dark" href="/networks">←</a>
        <div id="aps_container" class="container w-100">
          <div id="aps_table">
            <table class="table table-hover access-points-table">

@@ -22,6 +22,7 @@
            </div>
          </div>
        </div>
+       <a id="back_button" class="btn btn-dark" href="/zip_code">←</a>
        <div id="aps_container" class="container network-list-container w-100">
          Select your local network:
          <div id="aps_table">

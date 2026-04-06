@@ -24,7 +24,7 @@ defmodule VintageNetWizard.Web.Router do
   get "/" do
     case BackendServer.configurations() do
       [] ->
-        redirect(conn, "/networks")
+        redirect(conn, "/zip_code")
 
       configs ->
         render_page(conn, "index.html", conn.assigns.init_opts,
@@ -38,13 +38,11 @@ defmodule VintageNetWizard.Web.Router do
 
   post "/ssid/:ssid" do
     password = conn.body_params["password"]
-    zip_code = conn.body_params["zip_code"]
     params = Map.put(conn.body_params, "ssid", ssid)
 
     case WiFiConfiguration.json_to_network_config(params) do
       {:ok, wifi_config} ->
         :ok = BackendServer.save(wifi_config)
-        set_zip_code(zip_code)
         #redirect(conn, "/")
         #redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
         redirect(conn, "/apply")
@@ -57,7 +55,6 @@ defmodule VintageNetWizard.Web.Router do
           ssid: ssid,
           error: error_message,
           password: password,
-          zip_code: get_zip_code(),
           user: conn.body_params["user"]
         )
     end
@@ -79,7 +76,6 @@ defmodule VintageNetWizard.Web.Router do
     render_password_page(conn, key_mgmt, conn.assigns.init_opts,
       ssid: ssid,
       password: "",
-      zip_code: get_zip_code(),
       error: "",
       user: ""
     )
@@ -114,13 +110,20 @@ defmodule VintageNetWizard.Web.Router do
   end
 
   get "/networks" do
-    render_page(conn, "networks.html", conn.assigns.init_opts,
-      configuration_status: configuration_status_details()
-    )
+    render_page(conn, "networks.html", conn.assigns.init_opts)
+  end
+
+  get "/zip_code" do
+    render_page(conn, "zip_code.html", conn.assigns.init_opts, zip_code: get_zip_code())
   end
 
   get "/networks/new" do
     render_page(conn, "network_new.html", conn.assigns.init_opts)
+  end
+
+  post "/zip_code" do
+    set_zip_code(conn.body_params["zip_code"])
+    redirect(conn, "/networks")
   end
 
   post "/networks/new" do
@@ -139,7 +142,6 @@ defmodule VintageNetWizard.Web.Router do
         render_password_page(conn, key_mgmt, conn.assigns.init_opts,
           ssid: ssid,
           password: "",
-          zip_code: get_zip_code(),
           error: "",
           user: ""
         )
