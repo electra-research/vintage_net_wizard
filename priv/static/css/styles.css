@@ -7,8 +7,20 @@
  --el-lightgray: #929292;
 }
 
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik-regular.otf') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik-medium.otf') format('opentype');
+  font-weight: 500;
+}
 
 *, body.h-100 {
+ font-family: 'Aeonik', sans-serif;
  background-color: var(--el-black);
  color: var(--el-white);
 }
