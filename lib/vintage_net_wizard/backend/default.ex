@@ -9,6 +9,8 @@ defmodule VintageNetWizard.Backend.Default do
 
   alias VintageNetWizard.{APMode, WiFiConfiguration}
 
+  @conn_ok_path "/tmp/conn_ok"
+
   @impl VintageNetWizard.Backend
   def init(ifname, ap_ifname) do
     # ["interface", ifname, "connection"] info never received when uap0 and wlan0
@@ -74,11 +76,13 @@ defmodule VintageNetWizard.Backend.Default do
   @impl VintageNetWizard.Backend
   def reset(state), do: initial_state(state.ifname, state.ap_ifname)
 
+
   @impl VintageNetWizard.Backend
   def handle_info(:configuration_timeout, %{data: data, ap_ifname: ap_ifname} = state) do
     # If we get this timeout, something went wrong trying to apply
     # the configuration, i.e. bad password or faulty network
     :ok = APMode.into_ap_mode(ap_ifname)
+    rm_conn_ok()
 
     data =
       data
@@ -103,6 +107,7 @@ defmodule VintageNetWizard.Backend.Default do
     # Everything connected, so cancel our timeout
     _ = Process.cancel_timer(data.apply_configuration_timer)
 
+    write_conn_ok()
     {:noreply, %{state | state: :idle, data: Map.delete(data, :apply_configuration_timer)}}
   end
 
@@ -127,6 +132,7 @@ defmodule VintageNetWizard.Backend.Default do
       |> Map.put(:configuration_status, :good)
       |> Map.delete(:apply_configuration_timer)
 
+    write_conn_ok()
     {:noreply, %{state | state: :configuring, data: data}}
   end
 
@@ -175,5 +181,12 @@ defmodule VintageNetWizard.Backend.Default do
       ifname: ifname,
       ap_ifname: ap_ifname
     }
+  end
+
+  defp write_conn_ok() do
+    File.write!(@conn_ok_path, "1")
+  end
+  defp rm_conn_ok() do
+    File.rm_rf!(@conn_ok_path)
   end
 end

@@ -27,12 +27,17 @@ defmodule VintageNetWizard.Web.Router do
         redirect(conn, "/zip_code")
 
       configs ->
-        render_page(conn, "index.html", conn.assigns.init_opts,
-          configs: configs,
-          configuration_status: configuration_status_details(),
-          format_security: &WiFiConfiguration.security_name/1,
-          get_key_mgmt: &WiFiConfiguration.get_key_mgmt/1
-        )
+        conn_ok = File.exists?("/tmp/conn_ok")
+        if conn_ok do
+          redirect(conn, "/apply?ok")
+        else
+          render_page(conn, "index.html", conn.assigns.init_opts,
+            configs: configs,
+            configuration_status: configuration_status_details(),
+            format_security: &WiFiConfiguration.security_name/1,
+            get_key_mgmt: &WiFiConfiguration.get_key_mgmt/1
+          )
+        end
     end
   end
 
@@ -43,8 +48,6 @@ defmodule VintageNetWizard.Web.Router do
     case WiFiConfiguration.json_to_network_config(params) do
       {:ok, wifi_config} ->
         :ok = BackendServer.save(wifi_config)
-        #redirect(conn, "/")
-        #redirect(conn, "/complete") # finish setup immediately; if the config is no good the wizard will autorestart
         redirect(conn, "/apply")
 
       error ->

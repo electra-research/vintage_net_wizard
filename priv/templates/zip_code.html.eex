@@ -22,16 +22,18 @@
       </div>
       <div id="zip_code_container" class="container justify-content-center w-100">
        <form id="config_form" class="col mt-2" action="/zip_code" method="POST">
+        <label for="zip_code">Location</label>
         <div class="form-group row">
-         <div class="col">
-           <label for="zip_code">Location</label>
+          <div class="col-6">
+            <div id="zip_info_container">-</div>
+          </div>
+         <div class="col-4">
            <input type="text" class="form-control" id="zip_code" name="zip_code", value="<%= zip_code %>">
          </div>
-         <div class="col" id="zip_info_container"></div>
+         <div class="col-2">
+           <button type="submit" class="btn btn-primary">→</button>
+         </div>
         </div>
-        <button type="submit" class="btn btn-primary">
-         Submit
-        </button>
        </form>
       </div> <!-- end form container -->
     </div> <!-- end container -->
@@ -49,11 +51,21 @@
   <script src="/js/zips.js"></script>
   <script>
     addEventListener('load', () => {
-      const zipInput = document.getElementById('zip_code'),
-            zipInfo = document.getElementById('zip_info_container');
-      zipInput.addEventListener('change', () => {
-        zipInfo.textContent = getZipInfo(zipInput.value) || '';
-      });
+      const
+        zipInput = document.getElementById('zip_code'),
+        zipInfo = document.getElementById('zip_info_container'),
+        updateZipInfo = () => {
+          const loc = getZipInfo(zipInput.value);
+          if (loc) {
+            zipInfo.className = 'located';
+            zipInfo.textContent = loc;
+          } else {
+            zipInfo.className = '';
+            zipInfo.textContent = '-';
+          }
+        };
+      updateZipInfo();
+      zipInput.addEventListener('change', updateZipInfo);
     });
   </script>
 </html>

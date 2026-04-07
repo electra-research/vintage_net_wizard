@@ -91,6 +91,10 @@ function applyConfiguration(title, button_color) {
     }
   }
 
+ if (window.location.search.match(/^\?ok$/))
+  state.view = 'configurationGood',
+  render(state);
+ else
   fetch("/api/v1/apply", {
     method: "POST",
     headers: {

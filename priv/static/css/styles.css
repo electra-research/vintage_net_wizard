@@ -133,3 +133,6 @@ button#back_button {
 #range_wiregraph_container.apply-page.done { display: block; }
 #electra_dot_local_button { margin: 2em 0; }
 #please_wait { font-size: 20px; font-weight: bold; }
+input#zip_code { color: var(--el-orange); font-weight: bold; }
+#zip_info_container { color: var(--el-lightgray); }
+#zip_info_container.located { color: var(--el-white); }
