@@ -16,7 +16,7 @@
 @font-face {
   font-family: 'Aeonik';
   src: url('/fonts/aeonik-medium.otf') format('opentype');
-  font-weight: 500;
+  font-weight: bold;
 }
 
 *, body.h-100 {
