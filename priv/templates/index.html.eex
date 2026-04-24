@@ -55,7 +55,7 @@
            Add a new network
          </a>
          <%= if length(configs) > 0 do %>
-           <a id="complete_button" class="btn btn-primary" href="/apply">
+           <a id="complete_button" class="btn btn-primary" href="/apply?ok">
              Apply
            </a>
          <% end %>
