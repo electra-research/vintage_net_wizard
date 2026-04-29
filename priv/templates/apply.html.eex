@@ -46,5 +46,10 @@
      </footer>
      <script src="/js/apply.js"></script>
      <script>applyConfiguration("<%= ui.title %>", "<%= ui.button_color %>")</script>
+     <script>
+       if (navigator.userAgent.match("Android")) {
+         document.getElementById("electra_dot_local_button").style = "display: none";
+       }
+     </script>
   </body>
 </html>
